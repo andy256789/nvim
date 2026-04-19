@@ -1,0 +1,42 @@
+local M = {}
+
+function M.setup()
+  local ok, telescope = pcall(require, "telescope")
+  if not ok then
+    return
+  end
+
+  telescope.setup({
+    defaults = {
+      path_display = { "smart" },
+    },
+    extensions = {
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = "smart_case",
+      },
+    },
+  })
+
+  pcall(telescope.load_extension, "fzf")
+
+  local builtin = require("telescope.builtin")
+  vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
+  vim.keymap.set("n", "<leader>fg", function()
+    if vim.fn.executable("rg") == 0 then
+      vim.notify(
+        "ripgrep (rg) is required for live_grep. Install it and restart Neovim.\nLinux: sudo apt install ripgrep\nWindows: winget install BurntSushi.ripgrep",
+        vim.log.levels.ERROR
+      )
+      return
+    end
+
+    builtin.live_grep()
+  end, { desc = "Live grep" })
+  vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find buffers" })
+  vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help tags" })
+end
+
+return M
