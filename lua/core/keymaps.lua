@@ -27,7 +27,6 @@ vim.keymap.set("n", "x", '"_x', opts)
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set("n", "<C-c>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "Format buffer" })
 vim.keymap.set("n", "Q", "<nop>")
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {
@@ -45,8 +44,23 @@ vim.keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split horizontally" })
 vim.keymap.set("n", "<leader>se", "<C-w>=", { desc = "Equalize splits" })
 vim.keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close split" })
 
+
 vim.keymap.set("n", "<leader>fp", function()
   local file_path = vim.fn.expand("%:~")
   vim.fn.setreg("+", file_path)
   print("File path copied: " .. file_path)
 end, { desc = "Copy file path" })
+
+-- Only for Windows development:
+
+vim.keymap.set("n", "<leader>b", function()
+    vim.cmd("write")
+    local build_script = vim.fn.findfile("build.bat", ".;")
+    if build_script == "" then
+        print("Error: Could not find build.bat in this or any parent directory!")
+        return
+    end
+    -- Convert forward slashes to backslashes and wrap in cmd /c
+    local build_path = vim.fn.fnamemodify(build_script, ":p"):gsub("/", "\\")
+    vim.cmd('!' .. 'cmd /c "' .. build_path .. '"')
+end, { desc = "Smart Build Handmade" })

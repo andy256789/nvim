@@ -13,6 +13,7 @@ vim.pack.add({
   "https://github.com/nvim-telescope/telescope.nvim",
   "https://github.com/nvim-telescope/telescope-fzf-native.nvim",
   "https://github.com/mbbill/undotree",
+  "https://github.com/stevearc/conform.nvim",
 })
 
 require("plugins.colorscheme").setup()
@@ -23,3 +24,4 @@ require("plugins.cmp").setup()
 require("plugins.autopairs").setup()
 require("plugins.telescope").setup()
 require("plugins.undotree").setup()
+require("plugins.conform").setup()
