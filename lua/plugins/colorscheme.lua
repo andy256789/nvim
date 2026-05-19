@@ -1,20 +1,21 @@
 local M = {}
 
 function M.setup()
-  local ok_theme, tokyonight = pcall(require, "tokyonight")
-  if ok_theme then
-    local transparent = true
-    local bg = "#011628"
-    local bg_dark = "#011423"
-    local bg_highlight = "#143652"
-    local bg_search = "#0A64AC"
-    local bg_visual = "#275378"
-    local fg = "#CBE0F0"
-    local fg_dark = "#B4D0E9"
-    local fg_gutter = "#627E97"
-    local border = "#547998"
+  local ok, tokyonight = pcall(require, "tokyonight")
+  if not ok then return end
 
-    tokyonight.setup({
+  local transparent = true
+  local bg = "#011628"
+  local bg_dark = "#011423"
+  local bg_highlight = "#143652"
+  local bg_search = "#0A64AC"
+  local bg_visual = "#275378"
+  local fg = "#CBE0F0"
+  local fg_dark = "#B4D0E9"
+  local fg_gutter = "#627E97"
+  local border = "#547998"
+
+  tokyonight.setup({
       style = "night",
       transparent = transparent,
       styles = {
@@ -41,10 +42,9 @@ function M.setup()
         colors.fg_sidebar = fg_dark
       end,
     })
-  end
 
-  local ok = pcall(vim.cmd.colorscheme, "tokyonight")
-  if not ok then
+  local ok_cs = pcall(vim.cmd.colorscheme, "tokyonight")
+  if not ok_cs then
     vim.cmd.colorscheme("default")
   end
 end

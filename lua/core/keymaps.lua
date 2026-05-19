@@ -1,11 +1,9 @@
-local opts = { noremap = true, silent = true }
+local opts = { silent = true }
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-vim.keymap.set("n", "<leader><leader>", function()
-  vim.cmd("so")
-end, { desc = "Source current file" })
+vim.keymap.set("n", "<leader><leader>", "<C-w>w", { desc = "Switch to next window split" })
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
@@ -26,6 +24,12 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 vim.keymap.set("n", "x", '"_x', opts)
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
+vim.keymap.set("i", "<Tab>", function()
+  if vim.fn.pumvisible() == 1 then
+    return "<C-y>"
+  end
+  return "<Tab>"
+end, { expr = true, replace_keycodes = true, desc = "Accept completion" })
 vim.keymap.set("n", "<C-c>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 vim.keymap.set("n", "Q", "<nop>")
 
