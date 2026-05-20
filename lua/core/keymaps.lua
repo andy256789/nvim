@@ -1,41 +1,45 @@
-local opts = { silent = true }
-
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 vim.keymap.set("n", "<leader><leader>", "<C-w>w", { desc = "Switch to next window split" })
 
+vim.keymap.set("x", "p", [["_dP]], { desc = "Paste without clobbering register" })
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete without yanking" })
+
+vim.keymap.set("i", "<C-c>", "<Esc>")
+vim.keymap.set("n", "<C-c>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
+
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
+vim.keymap.set("v", "<", "<gv", { silent = true })
+vim.keymap.set("v", ">", ">gv", { silent = true })
+
 vim.keymap.set("n", "J", "mzJ`z")
+
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half-page down and center" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half-page up and center" })
+
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
-vim.keymap.set("v", "<", "<gv", opts)
-vim.keymap.set("v", ">", ">gv", opts)
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Substitute word under cursor globally" })
 
-vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste without clobbering register" })
-vim.keymap.set("v", "p", '"_dp', opts)
-vim.keymap.set("n", "<leader>Y", [["+Y]], opts)
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
-vim.keymap.set("n", "x", '"_x', opts)
+vim.keymap.set("n", "<leader>Y", [["+Y]], { silent = true })
+vim.keymap.set({ "n", "x" }, "x", '"_x', { silent = true, desc = "Delete char without yanking" })
 
-vim.keymap.set("i", "<C-c>", "<Esc>")
+vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>", { desc = "Toggle Undotree" })
+
 vim.keymap.set("i", "<Tab>", function()
   if vim.fn.pumvisible() == 1 then
+    if vim.fn.complete_info({ "selected" }).selected == -1 then
+      return "<C-n><C-y>"
+    end
     return "<C-y>"
   end
   return "<Tab>"
 end, { expr = true, replace_keycodes = true, desc = "Accept completion" })
-vim.keymap.set("n", "<C-c>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 vim.keymap.set("n", "Q", "<nop>")
-
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {
-  desc = "Substitute word under cursor globally",
-})
 
 vim.keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" })
 vim.keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" })

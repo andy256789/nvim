@@ -4,7 +4,7 @@ Leader key: Space
 
 ## Core editing and movement
 
-- `<leader><leader>`: Source current file
+- `<leader><leader>`: Switch to next window split
 - `J` (normal): Join lines and keep cursor stable
 - `J` (visual): Move selected lines down
 - `K` (visual): Move selected lines up
@@ -16,6 +16,7 @@ Leader key: Space
 - `>` (visual): Indent right and keep selection
 - `<C-c>` (insert): Escape
 - `<C-c>` (normal): Clear search highlight
+- `<Tab>` (insert): Accept completion
 - `Q`: Disabled
 
 ## Clipboard and text operations
@@ -89,3 +90,7 @@ Leader key: Space
 - `:LspInfo`: Show attached LSP clients
 - `:checkhealth vim.lsp`: LSP health check
 - `:checkhealth telescope`: Telescope dependency health check
+
+## Custom Development
+
+- `<leader>b`: Smart Build (finds and runs `build.bat` in parent directories)
